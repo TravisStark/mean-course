@@ -1,6 +1,8 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 
+const Post = require("./models/post");
+
 const app = express();
 
 app.use(bodyParser.json());
@@ -21,16 +23,20 @@ app.use((req, res, next) => {
   );
   next();
 });
+//W5ZBonZu5CtX2XtE
 
 app.post("/api/posts", (req, res, next) => {
-  const post = req.body;
+  const post = new Post({
+    title: req.body.title,
+    content: req.body.content
+  });
   console.log(post);
   res.status(201).json({
     message: 'Post added successfully!'
   });
 });
 
-app.use('/api/posts', (req, res, next) => {
+app.get('/api/posts', (req, res, next) => {
   const posts = [
     {
       id: "fasdf312123",
